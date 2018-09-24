@@ -79,10 +79,12 @@
                                                         
                                             %>
                                             
-                                                <option value="<%=rs.getInt(1)%>" selected="true"><%=rs.getString(2)%></option>
-                                                    <%}%>
-                                                <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
-                                            <%}
+                                                    <option value="<%=rs.getInt(1)%>" selected="true"><%=rs.getString(2)%></option>
+                                
+                                                    <%}else{%>
+                                                    <option value="<%=rs.getInt(1)%>"><%=rs.getString(2)%></option>
+                                                
+                                            <%}}
 
                                                     } catch (Exception e) {
                                                     System.err.println("Error" + e);
@@ -111,8 +113,8 @@
                                 <div class="form-group">                                    
                                     <div class="col-md-5">
                                         <br>
-                                        <input type="submit" class="btn btn-primary" value="Guardar" name="guardarEditarUsuario">
-                                        <a href="usuarios.jsp" class="btn btn-primary">Cancelar</a>
+                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarEditarUsuario">
+                                        <a href="usuarios.jsp" class="btn btn-success">Cancelar</a>
                                     </div>
                                 </div>
                             </div>

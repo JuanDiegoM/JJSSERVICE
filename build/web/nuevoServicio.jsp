@@ -4,6 +4,9 @@
     Author     : Aida
 --%>
 
+<%@page import="java.sql.*"%>
+<%@page import="modelo.Database"%>
+<%@page import="java.io.PrintWriter"%>
 <%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,77 +15,104 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="head.jsp"></jsp:include>
-    </head>
-    <body>
+            <script src="boostrap/js/servicios.js" type="text/javascript"></script>
+        </head>
+        <body>
         <%
             HttpSession misession = (HttpSession) request.getSession();
             Usuario usuario = (Usuario) misession.getAttribute("usuarios");
         %>
+
+        <%
+            Database con = new Database();
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            PreparedStatement pst2 = null;
+            ResultSet rs2 = null;
+        %>
+
+        <% PrintWriter pt = response.getWriter(); %>
+
         <jsp:include page="index.jsp"></jsp:include>
-        <br><br>        
-        <div class = "row">
-            <div class = "col-md-10 col-md-offset-1">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Nuevo Servicio</h3>
-                    </div>
-                    <form>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        <label>Cedula Conductor</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Placa Vehículo</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Tipo de vehículo</label>
-                                        <select class="form-control">
-                                            <option selected="true" disabled="true">Seleccione tipo de vehículo</option>
+            <br><br>        
+            <div class = "row">
+                <div class = "col-md-10 col-md-offset-1">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Nuevo Servicio</h3>
+                        </div>
+                        <form method="post">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label>Cedula Conductor</label>
+                                            <input type="text" class="form-control" id="cedulaConductor" name="cedulaConductor" required="true">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Placa Vehículo</label>
+                                            <input type="text" class="form-control" id="placaVehiculo" name="placaVehiculo" required="true">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Tipo de vehículo</label>
+                                            <select class="form-control" id="parametroTipoVehiculonew" name="parametroTipoVehiculonew" required="true">
+                                                <option selected="true" disabled="true">Seleccione tipo de vehículo</option>
+                                            <%
+                                                try {
+
+                                                    String sql = "select * from tipoVehiculo";
+                                                    pst = con.getConnection().prepareStatement(sql);
+                                                    rs = pst.executeQuery();
+
+                                                    while (rs.next()) {
+                                            %>
+
+                                            <option value="<%=rs.getString(1)%>"><%=rs.getString(2)%></option>
+
+                                            <%}
+
+                                                    pst.close();
+                                                    rs.close();
+                                                    con.getConnection().close();
+
+                                                } catch (Exception e) {
+                                                    System.err.println("Error" + e);
+                                                }
+                                            %>
                                         </select>
                                     </div>
                                 </div>
                             </div><br>
                             <div class="row">                       
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                        <label>Tipo de servicio</label>
-                                        <select class="form-control">
-                                            <option selected="true" disabled="true">Seleccione tipo de servicio</option>
-                                        </select>
+                                <div class="form-group panel panel-success">
+
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Seleccione uno o mas tipos de servicios</h3>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label>Valor servicio</label>
-                                        <input type="text" class="form-control">
+
+                                    <div class="panel-body">
+                                        <div id="tabla">
+
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div id="destino">
 
                                 </div>
-
-                                <div class="col-md-6">
-                                    <br><br>
-                                    <button type="button" class="btn btn-success">Agregarr servicio</button>
-                                </div>
-
                             </div><br>
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label>Subtotal</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="subtotal" name="subtotal" disabled="true">
                                     </div>
-                                    <div class="col-md-4">
-                                        <label>% Descuento</label>
-                                        <input type="text" class="form-control">
-                                    </div>
+
                                     <div class="col-md-4">
                                         <label>Valor descuento</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="valorDescuento" name="valorDescuento" disabled="true">
+                                    </div>
+                                    <div class="col-md-4">    
+                                        <div id="descuento">
+
+                                        </div>                                        
                                     </div>
                                 </div>
                             </div>
@@ -91,10 +121,12 @@
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label>Total Servicio</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="totalServicio" name="totalServicio" disabled="true">
                                     </div><br>
+
                                     <div class="col-md-4">
-                                        <input type="submit" class="btn btn-success" value="Guardar">
+                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarNuevoServicio" onclick="guardarServicio()">
+                                        <a href="listarServicios.jsp" type="button" class="btn btn-success">Cancelar</a>
                                     </div>
 
                                 </div>

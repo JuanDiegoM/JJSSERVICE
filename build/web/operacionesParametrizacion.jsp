@@ -235,3 +235,46 @@
         }
     }
 %>
+
+<%
+    if (request.getParameter("guardarEditarCostoServicio") != null) {
+
+        int idTipoServicioVehiculo = Integer.parseInt(request.getParameter("idTipoServicioVehiculo"));
+        int idTipoServicio = Integer.parseInt(request.getParameter("parametroServicioEdit"));
+        int idTipoVehiculo = Integer.parseInt(request.getParameter("parametroTipoVehiculoEdit"));
+        double valorServicio = Double.parseDouble(request.getParameter("parametroValorServicioEdit"));
+        DaoTipoServicioVehiculo daoTsv = new DaoTipoServicioVehiculo();
+        if (daoTsv.editarTipoServicioVehiculo(idTipoServicioVehiculo, idTipoVehiculo, idTipoServicio, valorServicio)) {
+
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Costo de servicio editado');");
+            pt.println("location='parametroCostoServicios.jsp';");
+            pt.println("</script>");
+
+        } else {
+
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Error al tratar de editar el costo del servicio');");
+            pt.println("location='editarCostoServicio.jsp';");
+            pt.println("</script>");
+        }
+    }
+%>
+
+<%
+    if (request.getParameter("btnEliminarTipoServicioVehiculo") != null) {
+        int idTipoServicioVehiculo = Integer.parseInt(request.getParameter("btnEliminarTipoServicioVehiculo"));
+        DaoTipoServicioVehiculo daoTsv = new DaoTipoServicioVehiculo();
+        try {
+            if(daoTsv.eliminarTipoServicioVehiculo(idTipoServicioVehiculo)) {
+                
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('Costo de servicio eliminado');");
+                pt.println("location='parametroCostoServicios.jsp';");
+                pt.println("</script>");
+            }
+        } catch (SQLException ex) {
+
+        }
+    }
+%>

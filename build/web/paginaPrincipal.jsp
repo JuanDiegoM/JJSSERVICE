@@ -14,6 +14,6 @@
     </head>
     <body>
          <jsp:include page="index.jsp"></jsp:include>
-         <img style="width: 100%; height: 600px;" src="images/repar.jpg">
+         <img style="width: 100%; height: 545px;" src="images/service.jpg">
     </body>
 </html>

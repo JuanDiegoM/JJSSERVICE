@@ -31,6 +31,18 @@ $(document).ready(function (){
             return false;
         }
     });
+    
+    $("#formularioCostoServicio").submit(function () {
+        
+        var resul = confirm('¿Esta seguro que desea eliminar el registro?');
+        if (resul === true)
+        {
+            return true;
+        }else{
+            
+            return false;
+        }
+    });
 });
 
 

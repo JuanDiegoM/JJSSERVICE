@@ -95,8 +95,8 @@
                                 <div class="form-group">                                    
                                     <div class="col-md-5">
                                         <br>
-                                        <input type="submit" class="btn btn-primary" value="Guardar" name="guardarNuevoUsuario">
-                                        <a href="usuarios.jsp" class="btn btn-primary">Cancelar</a>
+                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarNuevoUsuario">
+                                        <a href="usuarios.jsp" class="btn btn-success">Cancelar</a>
                                     </div>
                                 </div>
                             </div>

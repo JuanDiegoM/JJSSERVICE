@@ -52,8 +52,8 @@
                                 <div class="form-group">                                    
                                     <div class="col-md-5">
                                         <br>
-                                        <input type="submit" class="btn btn-primary" value="Guardar" name="guardarNuevoParametroDescuento">
-                                        <a href="parametroDescuentos.jsp" class="btn btn-primary">Cancelar</a>
+                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarNuevoParametroDescuento">
+                                        <a href="parametroDescuentos.jsp" class="btn btn-success">Cancelar</a>
                                     </div>
                                 </div>
                             </div>

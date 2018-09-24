@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-md-5">
                                 <br>
-                                <input type="submit" class="btn btn-primary" name="loginUsuario">
+                                <input type="submit" class="btn btn-success" name="loginUsuario">
                             </div>
                         </div>
                     </form>
