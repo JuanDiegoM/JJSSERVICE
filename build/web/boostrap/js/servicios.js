@@ -1,6 +1,7 @@
 /* global arrayTotales, arrayIdTipoServicios */
 
 $(document).ready(function () {
+        
     porcDescuento = 0;
     arrayTotales = [];
     arrayIdTipoServicios = [];
@@ -9,7 +10,7 @@ $(document).ready(function () {
     $("#valorDescuento").val(0);
     $("#porcentajeDescuento").val(0);
     $("#totalServicio").val(0);
-
+    
     $("#parametroTipoVehiculonew").change(function () {
         arrayTotales = [];
         arrayIdTipoServicios = [];
@@ -22,6 +23,7 @@ $(document).ready(function () {
         $.post('Services', {
             idTipoVehiculo: idTipoVehiculo
         }, function (responseText) {
+            
             $('#tabla').html(responseText);
         });
     });
@@ -136,7 +138,8 @@ function guardarServicio() {
             porcentajeDescuento: porcDescuento,
             valorDescuento: $("#valorDescuento").val(),
             totalServicio: $("#totalServicio").val()
-        }, function (responseText) {
+        }, function (responseText) {            
+            alert("Servicio Registrado");
            
         });
     }

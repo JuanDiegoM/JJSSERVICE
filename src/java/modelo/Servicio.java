@@ -16,6 +16,7 @@ public class Servicio {
     private double subtotal;
     private double valorTotalServicio;
     private String estado;
+    private String tiempoDuracion;
 
     public Servicio() {
     }
@@ -33,6 +34,21 @@ public class Servicio {
         this.valorTotalServicio = valorTotalServicio;
         this.estado = estado;
     }
+
+    public Servicio(Date fechaServicio, Time horaLlegada, String cedulaCliente, String placaVehiculo, Time horaSalida, int porcentajeDescuento, double valorDescuento, double subtotal, double valorTotalServicio, String tiempoDuracion) {
+        this.fechaServicio = fechaServicio;
+        this.horaLlegada = horaLlegada;
+        this.cedulaCliente = cedulaCliente;
+        this.placaVehiculo = placaVehiculo;
+        this.horaSalida = horaSalida;
+        this.porcentajeDescuento = porcentajeDescuento;
+        this.valorDescuento = valorDescuento;
+        this.subtotal = subtotal;
+        this.valorTotalServicio = valorTotalServicio;        
+        this.tiempoDuracion = tiempoDuracion;
+    }
+    
+    
 
     public Date getFechaServicio() {
         return fechaServicio;
@@ -121,6 +137,15 @@ public class Servicio {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getTiempoDuracion() {
+        return tiempoDuracion;
+    }
+
+    public void setTiempoDuracion(String tiempoDuracion) {
+        this.tiempoDuracion = tiempoDuracion;
+    }
+    
     
     
     

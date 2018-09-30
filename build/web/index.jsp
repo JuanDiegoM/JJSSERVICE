@@ -61,10 +61,10 @@
                         %>
                         <div class="col-md-4"> 
                             <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle btn btn-primary" style="width: 150px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Informes <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle btn btn-primary" style="width: 150px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="nuevoReporte.jsp" target="_self">Nuevo Informe</a></li>
-                                    <li><a href="listarReportes.jsp" target="_self">Listar Informes</a></li>
+                                    <li><a href="nuevoReporte.jsp" target="_self">Nuevo Reporte</a></li>
+                                    <li><a href="listarReportes.jsp" target="_self">Listar Reportes</a></li>
                                 </ul>
                             </li>
                         </div>

@@ -60,17 +60,20 @@ public class GuardarServicio extends HttpServlet {
             String horaLlegada = request.getParameter("horaLlegada");
             String fechaServicio = request.getParameter("fechaServicio");
             DaoServicio daoS = new DaoServicio();
-            if(daoS.registrarServicio(cedulaCliente, placaVehiculo, horaLlegada, fechaServicio, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio, idTipoServicio, valorServicio, idTipoVehiculo)){
+            if(daoS.registrarServicio(cedulaCliente, placaVehiculo, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio, idTipoServicio, valorServicio, idTipoVehiculo)){
                 
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Servicio Registrado');");
                 out.println("location='listarServicios.jsp';");
                 out.println("</script>");
+                
             }else{
+                
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Error al tratar de registrar el servicio');");
                 out.println("location='nuevoServicio.jsp';");
                 out.println("</script>");
+                
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(GuardarServicio.class.getName()).log(Level.SEVERE, null, ex);

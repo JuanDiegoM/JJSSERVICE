@@ -21,7 +21,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Reporte</title>
         <jsp:include page="head.jsp"></jsp:include>
-
+            <script src="boostrap/js/jquery.table2excel.min.js" type="text/javascript"></script>
+            <script src="boostrap/js/Reportes.js" type="text/javascript"></script>
         </head>
         <body>
         <jsp:include page="index.jsp"></jsp:include>
@@ -34,27 +35,20 @@
                         </div>
 
                         <div class="panel-body">
-                            <form action="" method="post" id="formNuevoReporte">
+                            <form action="" method="" id="formNuevoReporte">
                                 <div class="row">
                                     <div class="form-group">
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <label>Fecha Inicio</label>
                                             <input type="date" class="form-control" id="reporteFechaInicio" name="reporteFechaInicio">
                                         </div>
 
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <label>Fecha Fin</label>
                                             <input type="date" class="form-control" id="reporteFechaFin" name="reporteFechaFin">
                                         </div>
 
-                                    </div>
-                                </div>
-                                <br>
-
-                                <div class="row">
-                                    <div class="form-group">
-
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <label>Tipo de Servicio</label>
                                             <select class="form-control" id="parametroServicionew" name="parametroServicionew">
                                                 <option selected="true" disabled="true">Seleccione tipo de servicio</option>
@@ -79,7 +73,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-3">
                                         <label>Tipo de Vehículo</label>
                                         <select class="form-control" id="parametroTipoVehiculonew" name="parametroTipoVehiculonew">
                                             <option selected="true" disabled="true">Seleccione tipo de vehículo</option>
@@ -118,7 +112,7 @@
                                 <div class="form-group">                                    
                                     <div class="col-md-4">
                                         <br>
-                                        <input type="submit" class="btn btn-success" value="Generar Reporte" name="generarReporte">
+                                        <input type="button" class="btn btn-success" value="Ver Reporte" name="VerReporte" onclick="verReporte()">
                                         <a href="listarReportes.jsp" class="btn btn-success">Cancelar</a>
                                     </div>
                                 </div>
@@ -129,6 +123,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="container" id="repoteGeneral">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reporte General</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div id="tablaReporte">
+
+                    </div>
+                    
+                    <button id="btn" class="btn btn-success">Exportar a Excel</button>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
 

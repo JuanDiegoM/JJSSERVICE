@@ -92,6 +92,11 @@
                 pt.println("alert('Tipo de servicio eliminado');");
                 pt.println("location='tipoServicios.jsp';");
                 pt.println("</script>");
+            }else{
+                 pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('No se puede eliminar el tipo de servicio');");
+                pt.println("location='tipoServicios.jsp';");
+                pt.println("</script>");
             }
         } catch (SQLException ex) {
 

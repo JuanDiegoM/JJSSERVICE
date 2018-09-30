@@ -13,14 +13,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="head.jsp"></jsp:include>
-        
+        <jsp:include page="head.jsp"></jsp:include>        
         </head>
         <body>
 
         <jsp:include page="index.jsp"></jsp:include>
             <br><br>
-            <form action="" method="post" id="formularioTipoServicio" name="formularioServicio">
+            <form action="operacionesServicios.jsp" method="post" id="formularioServicio" name="formularioServicio">
                 <div class = "row">
                     <div class = "col-md-10 col-md-offset-1">
                         <div class="panel panel-primary">
@@ -56,7 +55,7 @@
                                             PreparedStatement pst = null;
                                             ResultSet rs = null;
 
-                                            String sql = "select se.idServicio, se.cedulaCliente, se.placaVehiculo, se.fechaServicio, se.horaEntrada, tv.tipoVehiculo, se.valorTotalservicio, se.estado  from servicio se inner join tipoVehiculo tv on se.idTipoVehiculo = tv.idTipoVehiculo where se.estado = 'proceso'";
+                                            String sql = "select se.idServicio, se.cedulaCliente, se.placaVehiculo, DATE(se.date) Fecha, TIME(se.horaEntrada) Hora, tv.tipoVehiculo, se.valorTotalservicio, se.estado  from servicio se inner join tipoVehiculo tv on se.idTipoVehiculo = tv.idTipoVehiculo where se.estado = 'proceso'";
                                             pst = con.getConnection().prepareStatement(sql);
                                             rs = pst.executeQuery();
 

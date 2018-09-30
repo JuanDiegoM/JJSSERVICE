@@ -21,6 +21,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="head.jsp"></jsp:include>
+        <script src="boostrap/js/tipoServicioVehiculo.js" type="text/javascript"></script>
         </head>
         <body>
 

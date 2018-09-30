@@ -85,7 +85,7 @@ public class DaoUsuario extends Database {
         return false;
     }
 
-    public List<Usuario> obtenerTodosLosUsuarios() throws SQLException {
+    /*public List<Usuario> obtenerTodosLosUsuarios() throws SQLException {
         List<Usuario> listaUsuario = new LinkedList<>();
         String sql = "select u.idUsuario, u.nombre, tu.idTipoUsuario as idTipoUsuario, tu.tipoUsuario as tipoUsuario  from usuar u inner join tipoUsuario tu on u.idTipoUsuario = tu.idTipoUsuario";
         pst = getConnection().prepareStatement(sql);
@@ -101,7 +101,7 @@ public class DaoUsuario extends Database {
         }
         pst.close();
         return listaUsuario;
-    }
+    }*/
 
     public boolean eliminarUsuario(int idUsuario) throws SQLException {
         String sql = "delete from usuar where idUsuario = ?";
