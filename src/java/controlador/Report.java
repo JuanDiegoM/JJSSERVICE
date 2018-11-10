@@ -3,6 +3,7 @@ package controlador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +50,9 @@ public class Report extends HttpServlet {
         try {
             DaoReporte daoR = new DaoReporte();
             List<Reporte> lstaReporte = daoR.generarReporte(idTipoVehiculo, idTipoServicio, fechaInicio, fechaFin);
-
+            String consulta = daoR.extraerConsulta(idTipoVehiculo, idTipoServicio, fechaInicio, fechaFin);
+            //System.out.println(consulta);
+            out.println("<input type='hidden' id='consulta' name='consulta' value='"+consulta+"'>");
             out.println("<table class='table table-bordered'>");
             out.println("<thead>");
             out.println("<tr>\n" +
@@ -79,10 +82,13 @@ public class Report extends HttpServlet {
             out.println("<th>"+costoTotalServicios+"</th>");
             out.println("<th>Cantidad De servicios Prestados</th>");
             out.println("<th>"+i+"</th>");
+            //out.println("<th>Promedio de tiempo</th>");
             out.println("</table>");
             
             
         } catch (SQLException ex) {
+            Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

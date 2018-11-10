@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * @author Diego
  */
 public class DaoDescuentoTest {
-    
+    Random r = new Random();
     public DaoDescuentoTest() {
     }
     
@@ -43,8 +43,11 @@ public class DaoDescuentoTest {
         String descripcion = "Descuento mas de 3 servicios";
         int porcentajeDescuento = 15;
         DaoDescuento instance = new DaoDescuento();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.registrarParametroDescuento(descripcion, porcentajeDescuento);
+        if (result == true) {
+            expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -57,12 +60,16 @@ public class DaoDescuentoTest {
     @Test
     public void testEditarPorcentajeDescuento() throws Exception {
         System.out.println("Editar Porcentaje Descuento");
-        int idParametroDescuento = 10;
-        String descripcion = "Nuevo porcentaje de descuento";
+        int idParametroDescuento = 0;
+        String descripcion = "Porcentaje de descuento editado";
         int porcentajeDescuento = 20;
         DaoDescuento instance = new DaoDescuento();
-        boolean expResult = true;
+        boolean expResult = false;
+        idParametroDescuento = r.randomIdDescuento();
         boolean result = instance.editarPorcentajeDescuento(idParametroDescuento, descripcion, porcentajeDescuento);
+        if (result == true) {
+            expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -75,10 +82,14 @@ public class DaoDescuentoTest {
     @Test
     public void testEliminarParametroDescuento() throws Exception {
         System.out.println("Eliminar Parametro Descuento");
-        int idParametroDescuento = 9;
+        int idParametroDescuento = 0;
         DaoDescuento instance = new DaoDescuento();
-        boolean expResult = true;
+        boolean expResult = false;
+        idParametroDescuento = r.randomIdDescuento();
         boolean result = instance.eliminarParametroDescuento(idParametroDescuento);
+        if (result == true) {
+            expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

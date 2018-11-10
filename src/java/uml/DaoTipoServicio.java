@@ -16,8 +16,10 @@ public class DaoTipoServicio extends Database {
         pst.setString(1, tipoServicio);
 
         if (pst.executeUpdate() == 1) {
-
+            System.out.println("Tipo de servicio guardado");
             return true;
+        }else{
+            System.out.println("Error al tratar de guardar el tipo de servicio");
         }
         try {
 
@@ -49,7 +51,10 @@ public class DaoTipoServicio extends Database {
         pst.setString(1, tipoServicio);
         pst.setInt(2, idTipoServicio);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Tipo de servicio editado");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el tipo de servicio");
         }
         try {
 
@@ -81,14 +86,17 @@ public class DaoTipoServicio extends Database {
         pst.setInt(1, idTipoServicio);
         rs = pst.executeQuery();
         if (rs.absolute(1)) {
-                System.out.println("En uso");
+                System.out.println("No se puede eliminar el tipo de servicio, puede estar relacionado con parametrización de costos");
                 return false;
         }else{        
             String sql = "delete from tipoServicio where idTipoServicio = ?";
             pst = getConnection().prepareStatement(sql);
             pst.setInt(1, idTipoServicio);
             if (pst.executeUpdate() == 1) {
+                System.out.println("Tipo de servicio eliminado");
                 return true;
+            }else{
+                System.out.println("Error al tratar de eliminar el tipo de servicio");
             }
         }
         try {

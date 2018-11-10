@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DaoTipoVehiculoTest {
-    
+    Random r = new Random();
     public DaoTipoVehiculoTest() {
     }
     
@@ -38,8 +38,11 @@ public class DaoTipoVehiculoTest {
         System.out.println("Tipo de vehículo registrado");
         String tipoVehiculo = "Volqueta";
         DaoTipoVehiculo instance = new DaoTipoVehiculo();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.registrarTipoVehiculo(tipoVehiculo);
+        if (result == true) {
+             expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -52,11 +55,15 @@ public class DaoTipoVehiculoTest {
     @Test
     public void testEditarTipoVehiculo() throws Exception {
         System.out.println("Tipo de vehículo editado");
-        int idTipoVehiculo = 1;
+        int idTipoVehiculo = 0;
         String tipoVehiculo = "Buseta";
         DaoTipoVehiculo instance = new DaoTipoVehiculo();
-        boolean expResult = true;
+        boolean expResult = false;
+        idTipoVehiculo = r.randomIdTipoVehiculo();
         boolean result = instance.editarTipoVehiculo(idTipoVehiculo, tipoVehiculo);
+        if (result == true) {
+            expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -69,10 +76,14 @@ public class DaoTipoVehiculoTest {
     @Test
     public void testEliminarTipoVehiculo() throws Exception {
         System.out.println("No se puede eliminar el tipo de vehiculo");
-        int idTipoVehiculo = 12;
+        int idTipoVehiculo = 0;
         DaoTipoVehiculo instance = new DaoTipoVehiculo();
         boolean expResult = false;
+        idTipoVehiculo = r.randomIdTipoVehiculo();
         boolean result = instance.eliminarTipoVehiculo(idTipoVehiculo);
+        if (result == true) {
+            expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

@@ -10,7 +10,7 @@ public class Database {
     private String url = "jdbc:mysql://localhost:3306/jjs service";
     private String usuario = "root";
     private String contraseña = "";
-    private Connection con;
+    public Connection con;
 
     public Database() {
         try {

@@ -76,7 +76,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%                                        try {
+                                    <%
+                                        try {
                                             int idservicio = Integer.parseInt(request.getParameter("idservicio"));
                                             Database con = new Database();
                                             PreparedStatement pst = null;
@@ -116,7 +117,9 @@
             </div>
             <div class="container">
                 <div class="col-md-12">
-                    <a href="listarServicios.jsp" class="btn btn-success">Volver</a>
+                    <a href="listarServicios.jsp" type="button" class="btn btn-success btn-sm" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>                    
                 </div>
             </div>
 

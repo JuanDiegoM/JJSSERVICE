@@ -19,36 +19,45 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="head.jsp"></jsp:include>
-        <script src="boostrap/js/usuarios.js" type="text/javascript"></script>
-    </head>
-    <body>
-         <jsp:include page="index.jsp"></jsp:include>
-        <br><br>
-        <form action="operacionesUsuarios.jsp" method="post" id="formularioEliminarUsuario" name="formularioEliminarUsuario">
-            <div class = "row">
-                <div class = "col-md-10 col-md-offset-1">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Usuarios</h3>
-                        </div>
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="visibility: hidden" style="width: 1%;"></th> 
-                                        <th></th>
-                                        <th>Nombre</th>
-                                        <th>Tipo de usuario</th>
-                                        <th colspan="2">
-                                            <a href="nuevoUsuario.jsp" type="button" class="btn btn-info ">
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                            </a>                                          
+            <script src="boostrap/js/usuarios.js" type="text/javascript"></script>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+        </head>
+        <body>
+        <jsp:include page="index.jsp"></jsp:include>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-                                        </th>
-                                    </tr>
+            <br><br>
+            <form action="" method="post" id="formularioEliminarUsuario" name="formularioEliminarUsuario">
+                <div class = "row">
+                    <div class = "col-md-10 col-md-offset-1">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Usuarios</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="container">
+                                    <div  class="form-control-col-sm-4 col-xs-4">                                    
+                                        <input type="text" id="filtrar" class="form-control" placeholder="Buscar..."><br>
+                                    </div> 
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="visibility: hidden" style="width: 1%;"></th> 
+                                            <th></th>
+                                            <th>Nombre</th>
+                                            <th>Tipo de usuario</th>
+                                            <th colspan="2">
+                                                <a href="nuevoUsuario.jsp" type="button" class="btn btn-info ">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                </a>                                          
 
-                                </thead>
-                                <tbody>
+                                            </th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody class="buscar">
                                     <%                                        try {
                                             Database con = new Database();
                                             PreparedStatement pst = null;
@@ -81,10 +90,10 @@
 
                                         <td>
 
-                                            <button type="submit" class="btn btn-danger" value="<%=rs.getString(1)%>" id="btnEliminarUsuario" name="btnEliminarUsuario">
+                                            <button type="button" class="btn btn-danger" onclick="borrarUsuario(<%=rs.getString(1)%>);" id="btnEliminarUsuario" name="btnEliminarUsuario">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </button>
-                                            
+
                                         </td>
 
                                     </tr> 
@@ -94,7 +103,7 @@
                                             rs.close();
                                             con.getConnection().close();
 
-                                        }catch (Exception e) {
+                                        } catch (Exception e) {
                                             System.err.println("Error" + e);
                                         }
                                     %>
@@ -108,8 +117,7 @@
         </form>
     </body>
 </html>
-<%}
-else{
+<%} else {
         response.sendRedirect("paginaPrincipal.jsp");
     }
 %>

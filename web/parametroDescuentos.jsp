@@ -21,13 +21,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="head.jsp"></jsp:include>
-        <script src="boostrap/js/parametrosCostoServicios.js" type="text/javascript"></script>
+            <script src="boostrap/js/parametrosCostoServicios.js" type="text/javascript"></script>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
         </head>
         <body>
 
         <jsp:include page="index.jsp"></jsp:include>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <br><br>
-            <form action="operacionesParametrizacion.jsp" method="post" id="formularioDescuentos" name="formularioDescuentos">
+            <form action="" method="post" id="formularioDescuentos" name="formularioDescuentos">
                 <div class = "row">
                     <div class = "col-md-10 col-md-offset-1">
                         <div class="panel panel-primary">
@@ -35,24 +38,28 @@
                                 <h3 class="panel-title">Parametros De Descuentos</h3>
                             </div>
                             <div class="panel-body">
+                                <div class="container">
+                                    <div  class="form-control-col-sm-4 col-xs-4">                                    
+                                        <input type="text" id="filtrar" class="form-control" placeholder="Buscar..."><br>
+                                    </div> 
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="visibility: hidden" style="width: 1%;"></th> 
+                                            <th></th>
+                                            <th>Descripción</th>
+                                            <th>Porcentaje</th>
 
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="visibility: hidden" style="width: 1%;"></th> 
-                                        <th></th>
-                                        <th>Descripción</th>
-                                        <th>Porcentaje</th>
+                                            <th colspan="2">
+                                                <a href="nuevoParametroDescuento.jsp" type="button" class="btn btn-info ">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                </a>                                          
 
-                                        <th colspan="2">
-                                            <a href="nuevoParametroDescuento.jsp" type="button" class="btn btn-info ">
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                            </a>                                          
-
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="buscar">
                                     <%                                        try {
                                             Database con = new Database();
                                             PreparedStatement pst = null;
@@ -85,7 +92,7 @@
 
                                         <td>
 
-                                            <button type="submit" class="btn btn-danger" value="<%=rs.getString(1)%>" id="btnEliminarParametroDescuento" name="btnEliminarParametroDescuento">
+                                            <button type="button" class="btn btn-danger" onclick="borrarParametroDescuento(<%=rs.getString(1)%>);" id="btnEliminarParametroDescuento" name="btnEliminarParametroDescuento">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             </button>
 

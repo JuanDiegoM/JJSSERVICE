@@ -1,7 +1,6 @@
 
 package uml;
 
-import java.util.List;
 import modelo.Usuario;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,9 +8,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class DaoUsuarioTest {
-    
+    Random r = new Random();
     public DaoUsuarioTest() {
     }
     
@@ -36,15 +39,24 @@ public class DaoUsuarioTest {
      */
     @Test
     public void testAutenticacionUsuario() {
-        System.out.println("Autenticación incorrecta");
+        System.out.println("Autenticación de usuario incorrecta");
         String usuario = "diego";
         String contraseña = "1234";
-        DaoUsuario instance = new DaoUsuario();
-        Usuario expResult = null;
+        DaoUsuario instance = new DaoUsuario();        
         Usuario result = instance.autenticacionUsuario(usuario, contraseña);
+        Usuario expResult = result;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+    }
+    
+    @Test
+    public void testAutenticacionCorrectaUsuario() {
+        System.out.println("Autenticación de usuario Correcta");
+        String usuario = "diego";
+        String contraseña = "123";
+        DaoUsuario instance = new DaoUsuario();      
+        Usuario result = instance.autenticacionUsuario(usuario, contraseña);
+        Usuario expResult = result;
+        assertEquals(expResult, result);
     }
 
     /**
@@ -54,12 +66,16 @@ public class DaoUsuarioTest {
     @Test
     public void testRegistrarUsuario() throws Exception {
         System.out.println("Usuario registrado");
-        String nombre = "julio";
+        int idTipoUsuario = 0;
+        String nombre = r.randomNombreUsuario();
         String contraseña = "123";
-        int idTipoUsuario = 22;
+        idTipoUsuario = r.randomIdTipoUsuario();
         DaoUsuario instance = new DaoUsuario();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.registrarUsuario(nombre, contraseña, idTipoUsuario);
+        if (result == true) {
+             expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -70,11 +86,16 @@ public class DaoUsuarioTest {
      */
     @Test
     public void testEliminarUsuario() throws Exception {
+        
         System.out.println("Usuario eliminado");
-        int idUsuario = 20;
+        int idUsuario = 0;        
+        idUsuario = r.randomIdUsuario();        
         DaoUsuario instance = new DaoUsuario();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.eliminarUsuario(idUsuario);
+        if (result == true) {
+             expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -86,13 +107,18 @@ public class DaoUsuarioTest {
     @Test
     public void testEditarUsuario() throws Exception {
         System.out.println("Usuario editado");
-        int idUsuario = 22;
-        String nombreUsuario = "Johan";
+        int idUsuario = 0; 
+        int idTipoUsuario = 0;
+        idUsuario = r.randomIdUsuario();
+        String nombreUsuario = r.randomNombreUsuario();
         String contraseña = "123";
-        int idTipoUsuario = 1;
+        idTipoUsuario = r.randomIdTipoUsuario();
         DaoUsuario instance = new DaoUsuario();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.editarUsuario(idUsuario, nombreUsuario, contraseña, idTipoUsuario);
+        if (result == true) {
+             expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -105,12 +131,17 @@ public class DaoUsuarioTest {
     @Test
     public void testEditarUsuarioSinPassw() throws Exception {
         System.out.println("editarUsuarioSinPassw");
-        int idUsuario = 22;
-        String nombreUsuario = "Joan";
-        int idTipoUsuario = 20;
+        int idUsuario = 0;
+        int idTipoUsuario = 0;
+        idUsuario = r.randomIdUsuario();
+        String nombreUsuario = r.randomNombreUsuario();
+        idTipoUsuario = r.randomIdTipoUsuario();
         DaoUsuario instance = new DaoUsuario();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.editarUsuarioSinPassw(idUsuario, nombreUsuario, idTipoUsuario);
+        if (result == true) {
+             expResult = true;
+        }
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

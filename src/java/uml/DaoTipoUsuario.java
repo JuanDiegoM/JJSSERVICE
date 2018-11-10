@@ -17,8 +17,10 @@ public class DaoTipoUsuario extends Database {
         pst.setString(1, tipoUsuario);
         
         if (pst.executeUpdate() == 1) {
-            
+            System.out.println("Tipo de usuario guardado");
             return true;
+        }else{
+            System.out.println("Error al tratar de guardar el tipo de usuario");
         }
         try {
 
@@ -49,14 +51,17 @@ public class DaoTipoUsuario extends Database {
         pst.setInt(1, idTipoUsuario);
         rs = pst.executeQuery();
         if (rs.absolute(1)) {
-                System.out.println("En uso");
+                System.out.println("No se puede eliminar el tipo de usuario por que esta relacionado con usuario");
                 return false;
         }else{        
             String sql = "delete from tipoUsuario where idTipoUsuario = ?";
             pst = getConnection().prepareStatement(sql);
             pst.setInt(1, idTipoUsuario);
             if (pst.executeUpdate() == 1) {
+                System.out.println("Tipo de usuario eliminado");
                 return true;
+            }else{
+                System.out.println("Error al tratar de eliminar el tipo de usuario");
             }
         }
         try {
@@ -89,7 +94,10 @@ public class DaoTipoUsuario extends Database {
         pst.setString(1, tipoUsuario);
         pst.setInt(2, idTipoUsuario);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Tipo de usuario editado");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el tipo de usuario");
         }
         try {
 

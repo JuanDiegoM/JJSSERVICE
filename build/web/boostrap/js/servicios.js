@@ -1,7 +1,7 @@
-/* global arrayTotales, arrayIdTipoServicios */
+/* global arrayTotales, arrayIdTipoServicios, toastr */
 
 $(document).ready(function () {
-        
+
     porcDescuento = 0;
     arrayTotales = [];
     arrayIdTipoServicios = [];
@@ -10,7 +10,7 @@ $(document).ready(function () {
     $("#valorDescuento").val(0);
     $("#porcentajeDescuento").val(0);
     $("#totalServicio").val(0);
-    
+
     $("#parametroTipoVehiculonew").change(function () {
         arrayTotales = [];
         arrayIdTipoServicios = [];
@@ -23,10 +23,23 @@ $(document).ready(function () {
         $.post('Services', {
             idTipoVehiculo: idTipoVehiculo
         }, function (responseText) {
-            
+
             $('#tabla').html(responseText);
         });
     });
+
+    (function ($) {
+        $('#filtrar').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.buscar tr').hide();
+            $('.buscar tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        });
+
+    }(jQuery));
 });
 
 
@@ -46,6 +59,8 @@ function calcular(i) {
         contador++;
         arrayTotales.push($("#valorServicio" + i).val());
         arrayIdTipoServicios.push($("#idTipoServicio" + i).val());
+        $("#idTipoServicio").val(arrayIdTipoServicios);
+        $("#valorServicio").val(arrayTotales);
         //alert(arrayIdTipoServicios);
         if (contador >= 4) {
 
@@ -59,8 +74,8 @@ function calcular(i) {
                 $("#totalServicio").val(totalServicio);
                 porcDescuento = $("#porcentajeDescuento").val();
             });
-        }else{
-            
+        } else {
+
             porcDescuento = 0;
         }
 
@@ -83,6 +98,7 @@ function sacarValorServicioArray(array, item) {
     for (var i = 0; i < array.length; i++) {
         if (array[i] !== item) {
             arrayTotales.push(array[i]);
+            $("#valorServicio").val(arrayTotales);
         }
     }
     //alert(arrayTotales);
@@ -94,12 +110,14 @@ function sacarIdTipoServicioArray(array, item) {
     for (var i = 0; i < array.length; i++) {
         if (array[i] !== item) {
             arrayIdTipoServicios.push(array[i]);
+            $("#idTipoServicio").val(arrayIdTipoServicios);
         }
     }
     //alert(arrayIdTipoServicios);
 }
 
 function guardarServicio() {
+    limpiarCampos();
     var d = new Date();
     var mes = d.getMonth() + 1;
     var dia = d.getDate();
@@ -111,38 +129,111 @@ function guardarServicio() {
     var hora = momentoActual.getHours();
     var minuto = momentoActual.getMinutes();
     var horaActual = hora + " : " + minuto;
-    
-    if($("#cedulaConductor").val() === ""){        
-        $("#cedulaConductor").css('border-color', 'red');
-        alert("Debe ingresar un número de cédula");
-    }else if($("#placaVehiculo").val() === ""){        
-        $("#placaVehiculo").css('border-color', 'red');
-        alert("Debe ingresar una placa de vehículo");
-    }else if($("#parametroTipoVehiculonew").val() === null)    {
-        $("#parametroTipoVehiculonew").css('border-color', 'red');
-        alert("Debe seleccionar un tipo de vehiculo");
-    }else if(contador === 0){        
-        console.log("Debe seleccionar al menos un tipo de servicio");
+
+    var contadorErrores = 0;
+    var cont = contador;
+    if ($("#cedulaConductor").val() === "") {
+        contadorErrores++;
+        $("#cedulaConductor").css('background', 'red');
+
     }
-    else{
-        
-        $.post('GuardarServicio', {
-            cedulaConductor: $("#cedulaConductor").val(),
-            placaVehiculo: $("#placaVehiculo").val(),
-            idTipoVehiculo: $("#parametroTipoVehiculonew").val(),
-            fechaServicio: fechaActual,
-            horaLlegada: horaActual,
-            "idTipoServicio[]": arrayIdTipoServicios,
-            "valorServicio[]": arrayTotales,
-            subtotal: $("#subtotal").val(),
-            porcentajeDescuento: porcDescuento,
-            valorDescuento: $("#valorDescuento").val(),
-            totalServicio: $("#totalServicio").val()
-        }, function (responseText) {            
-            alert("Servicio Registrado");
-           
+    if ($("#placaVehiculo").val() === "") {
+        $("#placaVehiculo").css('background', 'red');
+        contadorErrores++;
+    }
+    if ($("#parametroTipoVehiculonew").val() === null) {
+        $("#parametroTipoVehiculonew").css('background', 'red');
+        contadorErrores++;
+    }
+    if (contadorErrores !== 0) {
+        alert("Los Campos pintados de rojo son obligatorios");
+        return false;
+    } else {
+        if (cont === 0) {
+            alert("Debe seleccionar al menos un tipo de servicio");
+            return false;
+        } else {
+            $("#contador").val(contador);
+            $.post('GuardarServicio', {
+                cedulaConductor: $("#cedulaConductor").val(),
+                placaVehiculo: $("#placaVehiculo").val(),
+                idTipoVehiculo: $("#parametroTipoVehiculonew").val(),
+                fechaServicio: fechaActual,
+                horaLlegada: horaActual,
+                "idTipoServicio[]": arrayIdTipoServicios,
+                "valorServicio[]": arrayTotales,
+                subtotal: $("#subtotal").val(),
+                porcentajeDescuento: porcDescuento,
+                valorDescuento: $("#valorDescuento").val(),
+                totalServicio: $("#totalServicio").val()
+            }, function (responseText) {
+                toastr.success(responseText);
+                setTimeout('document.location.reload()', 1000);
+
+            });
+        }
+
+    }
+}
+
+function borrarServicio(idServicio) {
+
+    var resul = confirm('¿Esta seguro que desea eliminar el registro?');
+    if (resul === true)
+    {
+        $.post('operacionesTipoServicioTipoVehiculo?opcion=eliminarServicio', {
+            idServicio: idServicio
+        }, function (responseText) {
+            if (responseText != "true") {
+                if (responseText[0] == "t") {
+                    toastr.success("Servicio eliminado");
+                    setTimeout('document.location.reload()', 1000);
+
+                } else {
+                    toastr.error("No se puede eliminar el Servicio");
+                }
+            } else {
+                toastr.error("Error Interno");
+                location.reload();
+            }
         });
+    } else {
+
+        return false;
     }
+}
+
+function finalizarServicio(idServicio) {
+    var resul = confirm('¿Esta seguro que desea finalizar el servicio?');
+    if (resul === true)
+    {
+        $.post('operacionesTipoServicioTipoVehiculo?opcion=finaliSezarrvicio', {
+            idServicio: idServicio
+        }, function (responseText) {
+            if (responseText != "true") {
+                if (responseText[0] == "t") {
+                    toastr.success("Servicio Finalizado");
+                    setTimeout('liquidarServicio.jsp', 1000);
+
+                } else {
+                    toastr.error("No se puede finalizar el Servicio");
+                }
+            } else {
+                toastr.error("Error Interno");
+                location.reload();
+            }
+        });
+    } else {
+
+        return false;
+    }
+}
+
+function limpiarCampos() {
+
+    $("#cedulaConductor").css('background', '');
+    $("#placaVehiculo").css('background', '');
+    $("#parametroTipoVehiculonew").css('background', '');
 }
 
 

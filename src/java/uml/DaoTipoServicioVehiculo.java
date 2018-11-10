@@ -17,10 +17,10 @@ public class DaoTipoServicioVehiculo extends Database {
         pst.setDouble(3, valorServicio);
 
         if (pst.executeUpdate() == 1) {
-
-            System.out.println("Costo registrado");
+            System.out.println("Costo de servicio registrado");
             return true;
-
+        }else{
+            System.out.println("Error al tratar de guardar el costo de servicio");
         }
         try {
 
@@ -45,7 +45,6 @@ public class DaoTipoServicioVehiculo extends Database {
     }
 
     public boolean editarTipoServicioVehiculo(int idTipoServicioVehiculo, int idTipoVehiculo, int idTipoServicio, double valorServicio) throws SQLException {
-        System.out.println("entro");
         String sql = "update tipoServicioVehiculo set idTipoVehiculo=?, idTipoServicio=?, valorServicio=? where idTipoServicioVehiculo = ?";
 
         pst = getConnection().prepareStatement(sql);
@@ -55,7 +54,10 @@ public class DaoTipoServicioVehiculo extends Database {
         pst.setDouble(3, valorServicio);
         pst.setInt(4, idTipoServicioVehiculo);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Costo de servicio editado");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el costo de servicio");
         }
         try {
 
@@ -84,7 +86,10 @@ public class DaoTipoServicioVehiculo extends Database {
         pst = getConnection().prepareStatement(sql);
         pst.setInt(1, idTipoServicioVehiculo);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Costo de servicio eliminado");
             return true;
+        }else{
+            System.out.println("Error al tratar de eliminar el costo de servicio");
         }
         try {
 

@@ -1,4 +1,4 @@
-
+    
 package uml;
 
 import java.sql.PreparedStatement;
@@ -20,8 +20,10 @@ public class DaoDescuento extends Database{
         pst.setInt(2, porcentajeDescuento);
 
         if (pst.executeUpdate() == 1) {
-
+            System.out.println("Parametro de descuento guardado");
             return true;
+        }else{
+            System.out.println("Error al tratar de guardar el parametro de descuentp");
         }
         try {
 
@@ -54,7 +56,10 @@ public class DaoDescuento extends Database{
         pst.setInt(2, porcentajeDescuento);
         pst.setInt(3, idParametroDescuento);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Parametro de descuento editado");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el parametro de descuento");
         }
         try {
 
@@ -85,7 +90,10 @@ public class DaoDescuento extends Database{
         pst = getConnection().prepareStatement(sql);
         pst.setInt(1, idParametroDescuento);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Parametro de descuento eliminado");
             return true;
+        }else{
+            System.out.println("Error al tratar de eliminar el parametro de descuento");
         }
         try {
 

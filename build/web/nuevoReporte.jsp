@@ -23,9 +23,12 @@
         <jsp:include page="head.jsp"></jsp:include>
             <script src="boostrap/js/jquery.table2excel.min.js" type="text/javascript"></script>
             <script src="boostrap/js/Reportes.js" type="text/javascript"></script>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
         </head>
         <body>
         <jsp:include page="index.jsp"></jsp:include>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <br><br>
             <div class = "row">
                 <div class = "col-md-10 col-md-offset-1">
@@ -131,10 +134,28 @@
                 </div>
 
                 <div class="panel-body">
-                    <div id="tablaReporte">
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="form-group">  
+                                <div class="col-md-4">
+                                    <label>Nombre</label>
+                                    <input type="text" class="form-control" id="nombreReporte" name="nombreReporte">
+                                </div>
+                                <div class="col-md-2">
+                                    <br>
+                                    <input type="button" class=" form-control btn btn-success" id="guardarReporte" name="guardarReporte" value="Guardar Reporte">
 
-                    </div>
-                    
+                                </div>
+                            </div>
+                        </div>  
+
+
+                        <br>
+                        <div id="tablaReporte">
+
+                        </div>
+                    </form>
+
                     <button id="btn" class="btn btn-success">Exportar a Excel</button>
                 </div>
             </div>

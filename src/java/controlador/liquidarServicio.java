@@ -54,7 +54,7 @@ public class liquidarServicio extends HttpServlet {
                 out.println("<label> Valor Total Del Servicio: " + lstServicio.getValorTotalServicio() + "</label><br><br>");
 
             }
-            out.println("<label>GRACIAS POR ELEGIRNOS</label>");
+            
             out.println("<center>");
 
         } catch (SQLException e) {

@@ -23,9 +23,11 @@ public class DaoUsuario extends Database {
             rs = pst.executeQuery();
 
             if (rs.absolute(1)) {
-                System.out.println("valido");
+                System.out.println("Usuario valido");
                 Usuario u = new Usuario(rs.getString(2), rs.getString(3), rs.getInt(4));
                 return u;
+            }else{
+                System.out.println("Usuario no valido");
             }
 
         } catch (SQLException e) {
@@ -60,8 +62,10 @@ public class DaoUsuario extends Database {
         pst.setInt(3, idTipoUsuario);
 
         if (pst.executeUpdate() == 1) {
-
+            System.out.println("Usuario registrado satisfactoriamente");
             return true;
+        }else{
+            System.out.println("Error al tratar de registrar el usuario");
         }
         try {
 
@@ -84,31 +88,16 @@ public class DaoUsuario extends Database {
         }
         return false;
     }
-
-    /*public List<Usuario> obtenerTodosLosUsuarios() throws SQLException {
-        List<Usuario> listaUsuario = new LinkedList<>();
-        String sql = "select u.idUsuario, u.nombre, tu.idTipoUsuario as idTipoUsuario, tu.tipoUsuario as tipoUsuario  from usuar u inner join tipoUsuario tu on u.idTipoUsuario = tu.idTipoUsuario";
-        pst = getConnection().prepareStatement(sql);
-        rs = pst.executeQuery();
-        while (rs.next()) {
-            int idUsuario = rs.getInt("idUsuario");
-            String nombre = rs.getString("nombre");
-            int idTipoUsuario = rs.getInt("idTipoUsuario");
-            String tipoUsuario = rs.getString("tipoUsuario");
-
-            System.out.println(idUsuario + " " + nombre + " " + tipoUsuario);
-            Usuario u = new Usuario(idUsuario, nombre, idTipoUsuario, tipoUsuario);
-        }
-        pst.close();
-        return listaUsuario;
-    }*/
-
+    
     public boolean eliminarUsuario(int idUsuario) throws SQLException {
         String sql = "delete from usuar where idUsuario = ?";
         pst = getConnection().prepareStatement(sql);
         pst.setInt(1, idUsuario);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Usuario eliminado satisfactoriamente");
             return true;
+        }else{
+            System.out.println("No se puede eliminar el usuario");
         }
         try {
 
@@ -142,7 +131,10 @@ public class DaoUsuario extends Database {
         pst.setInt(3, idTipoUsuario);
         pst.setInt(4, idUsuario);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Usuario editado satisfactoriamente");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el usuario");
         }
         try {
 
@@ -176,7 +168,10 @@ public class DaoUsuario extends Database {
         pst.setInt(2, idTipoUsuario);
         pst.setInt(3, idUsuario);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Usuario editado satisfactoriamente");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el usuario");
         }
         try {
 

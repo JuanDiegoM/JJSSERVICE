@@ -16,6 +16,7 @@
         <title>JSP Page</title>
         <jsp:include page="head.jsp"></jsp:include>
             <script src="boostrap/js/servicios.js" type="text/javascript"></script>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
         </head>
         <body>
         <%
@@ -34,6 +35,9 @@
         <% PrintWriter pt = response.getWriter(); %>
 
         <jsp:include page="index.jsp"></jsp:include>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <br><br>        
             <div class = "row">
                 <div class = "col-md-10 col-md-offset-1">
@@ -47,15 +51,15 @@
                                     <div class="form-group">
                                         <div class="col-md-4">
                                             <label>Cedula Conductor</label>
-                                            <input type="text" class="form-control" id="cedulaConductor" name="cedulaConductor" required="true">
+                                            <input type="text" class="form-control" id="cedulaConductor" name="cedulaConductor">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Placa Vehículo</label>
-                                            <input type="text" class="form-control" id="placaVehiculo" name="placaVehiculo" required="true">
+                                            <input type="text" class="form-control" id="placaVehiculo" name="placaVehiculo">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Tipo de vehículo</label>
-                                            <select class="form-control" id="parametroTipoVehiculonew" name="parametroTipoVehiculonew" required="true">
+                                            <select class="form-control" id="parametroTipoVehiculonew" name="parametroTipoVehiculonew">
                                                 <option selected="true" disabled="true">Seleccione tipo de vehículo</option>
                                             <%
                                                 try {
@@ -125,7 +129,7 @@
                                     </div><br>
 
                                     <div class="col-md-4">
-                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarNuevoServicio" onclick="guardarServicio()">
+                                        <input type="button" class="btn btn-success" value="Guardar" name="guardarNuevoServicio" onclick="guardarServicio()">
                                         <a href="listarServicios.jsp" type="button" class="btn btn-success">Cancelar</a>
                                     </div>
 

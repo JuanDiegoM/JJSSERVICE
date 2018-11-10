@@ -8,7 +8,7 @@ $(document).ready(function () {
     });
 });
 
-function generarFactura() {
+function imprimirFactura() {
     var pdf = new jsPDF('p', 'pt', 'letter');
     source = $('#tablaLiquidacion')[0];
 
@@ -32,7 +32,9 @@ function generarFactura() {
             'elementHandlers': specialElementHandlers
         },
         function (dispose) {
-            pdf.save('Factura de servicio.pdf');
+            var blob = pdf.output("blob");
+            window.open(URL.createObjectURL(blob));
+
         }, margins
     );
 }

@@ -14,6 +14,10 @@ public class TipoUsuario {
         this.idTipoUsuario = idTipoUsuario;
         this.tipoUsuario = tipoUsuario;
     }
+    
+    public TipoUsuario(int idTipoUsuario){
+        this.idTipoUsuario = idTipoUsuario;
+    }
 
     public int getIdTipoUsuario() {
         return idTipoUsuario;

@@ -9,6 +9,9 @@
 <%@page import="uml.DaoTipoVehiculo"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="uml.DaoTipoServicio"%>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <% PrintWriter pt = response.getWriter(); %>
 
@@ -87,13 +90,13 @@
         DaoTipoServicio daoTs = new DaoTipoServicio();
         try {
             if (daoTs.eliminarTipoServicio(idTipoServicio)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Tipo de servicio eliminado');");
                 pt.println("location='tipoServicios.jsp';");
                 pt.println("</script>");
-            }else{
-                 pt.println("<script type=\"text/javascript\">");
+            } else {
+                pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('No se puede eliminar el tipo de servicio');");
                 pt.println("location='tipoServicios.jsp';");
                 pt.println("</script>");
@@ -110,9 +113,16 @@
         DaoTipoVehiculo daoTv = new DaoTipoVehiculo();
         try {
             if (daoTv.eliminarTipoVehiculo(idTipoVehiculo)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
-                pt.println("alert('Tipo de vehículo eliminado');");
+                pt.println("toastr.error('Tipo de vehículo eliminado');");
+                //pt.println("alert('Tipo de vehículo eliminado');");
+                pt.println("location='tipoVehiculos.jsp';");
+                pt.println("</script>");
+            } else {
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("toastr.error('No se puede eliminar el tipo de vehículo');");
+                //pt.println("alert('No se puede eliminar el tipo de vehículo');");
                 pt.println("location='tipoVehiculos.jsp';");
                 pt.println("</script>");
             }
@@ -121,7 +131,8 @@
         }
     }
 %>
-
+toastr.error("Error al tratar de editar el usuario");
+setTimeout("location.href='editarUsuario.jsp'", 2000);
 
 
 <%
@@ -129,19 +140,19 @@
         String tipoVehiculo = request.getParameter("tipoVehiculoNew");
         DaoTipoVehiculo daoTv = new DaoTipoVehiculo();
         if (daoTv.registrarTipoVehiculo(tipoVehiculo)) {
-            
-                pt.println("<script type=\"text/javascript\">");
-                pt.println("alert('Tipo de vehículo guardado');");
-                pt.println("location='tipoVehiculos.jsp';");
-                pt.println("</script>");
+
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Tipo de vehículo guardado');");
+            pt.println("location='tipoVehiculos.jsp';");
+            pt.println("</script>");
 
         } else {
-            
-                pt.println("<script type=\"text/javascript\">");
-                pt.println("alert('Error al tratar de guardar el tipo de vehículo');");
-                pt.println("location='nuevoTipoVehiculo.jsp';");
-                pt.println("</script>");
-            
+
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Error al tratar de guardar el tipo de vehículo');");
+            pt.println("location='nuevoTipoVehiculo.jsp';");
+            pt.println("</script>");
+
         }
     }
 %>
@@ -155,14 +166,14 @@
 
         try {
             if (daoTsv.registrarTiposervicioVehiculo(idTipoServicio, idTipoVehiculo, valorServicio)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Nuevo parámetro de costo guardado');");
                 pt.println("location='parametroCostoServicios.jsp';");
                 pt.println("</script>");
-          
+
             } else {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Error al tratar de guardar parámetro de costo');");
                 pt.println("location='nuevoCostoServicio.jsp';");
@@ -176,12 +187,11 @@
 %>
 
 <%
-
     if (request.getParameter("guardarNuevoParametroDescuento") != null) {
         String descripcion = request.getParameter("parametroDescuentoNew");
         int porcentajeDescuento = Integer.parseInt(request.getParameter("porcentajeDescuentoNew"));
         DaoDescuento Dd = new DaoDescuento();
-        if (Dd.registrarParametroDescuento(descripcion, porcentajeDescuento)){
+        if (Dd.registrarParametroDescuento(descripcion, porcentajeDescuento)) {
 
             pt.println("<script type=\"text/javascript\">");
             pt.println("alert('Parametro de descuento guardado');");
@@ -206,7 +216,7 @@
         DaoDescuento Dd = new DaoDescuento();
         try {
             if (Dd.eliminarParametroDescuento(idParametroDescuento)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Parámetro de descuento eliminado');");
                 pt.println("location='parametroDescuentos.jsp';");
@@ -271,8 +281,8 @@
         int idTipoServicioVehiculo = Integer.parseInt(request.getParameter("btnEliminarTipoServicioVehiculo"));
         DaoTipoServicioVehiculo daoTsv = new DaoTipoServicioVehiculo();
         try {
-            if(daoTsv.eliminarTipoServicioVehiculo(idTipoServicioVehiculo)) {
-                
+            if (daoTsv.eliminarTipoServicioVehiculo(idTipoServicioVehiculo)) {
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Costo de servicio eliminado');");
                 pt.println("location='parametroCostoServicios.jsp';");

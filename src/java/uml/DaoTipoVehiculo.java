@@ -18,8 +18,10 @@ public class DaoTipoVehiculo extends Database{
         pst.setString(1, tipoVehiculo);
 
         if (pst.executeUpdate() == 1) {
-
+            System.out.println("Tipo de vehiculo guardado");
             return true;
+        }else{
+            System.out.println("Error al tratar de eliminar el tipo de vehiculo");
         }
         try {
 
@@ -51,7 +53,10 @@ public class DaoTipoVehiculo extends Database{
         pst.setString(1, tipoVehiculo);
         pst.setInt(2, idTipoVehiculo);
         if (pst.executeUpdate() == 1) {
+            System.out.println("Tipo de vehiculo editado");
             return true;
+        }else{
+            System.out.println("Error al tratar de editar el tipo de vehiculo");
         }
         try {
 
@@ -83,14 +88,17 @@ public class DaoTipoVehiculo extends Database{
         pst.setInt(1, idTipoVehiculo);
         rs = pst.executeQuery();
         if (rs.absolute(1)) {
-                System.out.println("En uso");
+                System.out.println("No se puede eliminar el tipo de vehiculo, puede estar relacionado con parametrización de costos");
                 return false;
         }else{        
             String sql = "delete from tipoVehiculo where idTipoVehiculo = ?";
             pst = getConnection().prepareStatement(sql);
             pst.setInt(1, idTipoVehiculo);
             if (pst.executeUpdate() == 1) {
+                System.out.println("Tipo de vehiculo eliminado");
                 return true;
+            }else{
+                System.out.println("Error al tratar de eliminar el tipo de vehiculo");
             }
         }
         try {

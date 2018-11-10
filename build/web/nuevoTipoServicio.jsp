@@ -18,50 +18,52 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Tipo De Servicio</title>
         <jsp:include page="head.jsp"></jsp:include>
-        <script src="boostrap/js/tipoServicioVehiculo.js" type="text/javascript"></script>
-    </head>
-    <body>
+            <script src="boostrap/js/tipoServicioVehiculo.js" type="text/javascript"></script>
+            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+        </head>
+        <body>
         <jsp:include page="index.jsp"></jsp:include>
-        <br><br>
-        <div class = "row">
-            <div class = "col-md-10 col-md-offset-1">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Nuevo Tipo De Servicio</h3>
-                    </div>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" ></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+            <br><br>
+            <div class = "row">
+                <div class = "col-md-10 col-md-offset-1">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Nuevo Tipo De Servicio</h3>
+                        </div>
 
-                    <div class="panel-body">
-                        <form action="operacionesParametrizacion.jsp" method="post" id="formNuevoTipoServicio">
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-5">
-                                        <label>Tipo de Servicio</label>
-                                        <input type="text" class="form-control" id="tipoServicioNew" name="tipoServicioNew">
-                                    </div>                                    
-                                </div>
-                            </div>
-                            <br>
-
-                            <div class="row">
-                                <div class="form-group">                                    
-                                    <div class="col-md-5">
-                                        <br>
-                                        <input type="submit" class="btn btn-success" value="Guardar" name="guardarNuevoTipoServicio">
-                                        <a href="tipoServicios.jsp" class="btn btn-success">Cancelar</a>
+                        <div class="panel-body">
+                            <form action="" method="post" id="formNuevoTipoServicio">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label>Tipo de Servicio</label>
+                                            <input type="text" class="form-control" id="tipoServicioNew" name="tipoServicioNew">
+                                        </div>                                    
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                                <br>
 
+                                <div class="row">
+                                    <div class="form-group">                                    
+                                        <div class="col-md-5">
+                                            <br>
+                                            <input type="button" class="btn btn-success" value="Guardar" id="guardarNuevoTipoServicio">
+                                            <a href="tipoServicios.jsp" class="btn btn-success">Cancelar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </body>
-</html>
+        </body>
+    </html>
 
-<%
-    }else{
+<%    } else {
         response.sendRedirect("paginaPrincipal.jsp");
     }
 %>

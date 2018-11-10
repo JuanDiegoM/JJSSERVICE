@@ -3,12 +3,8 @@ package uml;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import modelo.Database;
 import modelo.Servicio;
 
@@ -47,13 +43,16 @@ public class DaoServicio extends Database {
                     pst2.setInt(2, idTipoServicio[i]);
                     pst2.setDouble(3, valorServicio[i]);
                     if (pst2.executeUpdate() == 1) {
-                        System.out.println("true");
+                        System.out.println("detalle servicio registrado");
+                    }else{
+                        System.out.println("Error al tratar de registrar el detalle de servicio");
                     }
                 }
             }
+            System.out.println("Servicio registrado correctamente");
             return true;
         } else {
-            System.out.println("No gurado");
+            System.out.println("Error al tratar de registrar el servicio");
         }
         try {
 
@@ -82,7 +81,10 @@ public class DaoServicio extends Database {
         pst = getConnection().prepareStatement(sql);
 
         if (pst.executeUpdate() == 1) {
+            System.out.println("Servicio finalizado correctamente");
             return true;
+        }else{
+            System.out.println("Error al tratar de finalizar el servicio");
         }
         try {
 
@@ -106,29 +108,17 @@ public class DaoServicio extends Database {
 
         return false;
     }
-
-    public List<Servicio> liquidarServicio(int idServicio) throws SQLException {
-        List<Servicio> listaServicio = new LinkedList<>();
-
-        String sql = "SELECT DATE(fechaServicio) fechaServicio, cedulaCliente, placaVehiculo, TIME(horaEntrada) horaEntrada, TIME(horaSalida) horaSalida, TIMEDIFF(TIME(horaSalida), TIME(horaEntrada)) as tiempoDiferencia, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio from servicio where idServicio = " + idServicio + "";
+    
+    public boolean eliminarServicio(int idServicio) throws SQLException {
+             
+            String sql = "delete from servicio where idServicio = ?";
         pst = getConnection().prepareStatement(sql);
-        rs = pst.executeQuery();
-        //int i = 0;
-        while (rs.next()) {
-            Date fechaServicio = rs.getDate("fechaServicio");
-            String cedulaCliente = rs.getString("cedulaCliente");
-            String placaVehiculo = rs.getString("placaVehiculo");
-            Time horaLlegada = rs.getTime("horaEntrada");
-            Time horaSalida = rs.getTime("horaSalida");
-            String tiempoDiferencia = rs.getTime("tiempoDiferencia").toString();
-            double subtotal = rs.getDouble("subtotal");
-            int porcentajeDescuento = rs.getInt("porcentajeDescuento");
-            double valorDescuento = rs.getDouble("valorDescuento");
-            double valorTotalServicio = rs.getDouble("valorTotalServicio");
-
-            Servicio se = new Servicio(fechaServicio, horaLlegada, cedulaCliente, placaVehiculo, horaSalida, porcentajeDescuento, valorDescuento, subtotal, valorTotalServicio, tiempoDiferencia);
-            listaServicio.add(se);
-            //System.out.println(listaServicio);
+        pst.setInt(1, idServicio);
+        if (pst.executeUpdate() == 1) {
+            System.out.println("Servicio eliminado correctamente");
+            return true;
+        }else{
+            System.out.println("Error al tratar de eliminar el servicio");
         }
         try {
 
@@ -149,12 +139,56 @@ public class DaoServicio extends Database {
                 System.err.println("Error" + e);
             }
         }
+        return false;
+    }
+
+    public List<Servicio> liquidarServicio(int idServicio) throws SQLException {
+        List<Servicio> listaServicio = new LinkedList<>();
+        String tiempoServicio = null;
+        String sql = "SELECT DATE(fechaServicio) fechaServicio, cedulaCliente, placaVehiculo, TIME(horaEntrada) horaEntrada, TIME(horaSalida) horaSalida, TIMEDIFF(TIME(horaSalida), TIME(horaEntrada)) as tiempoDiferencia, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio from servicio where idServicio = " + idServicio + "";
+        pst = getConnection().prepareStatement(sql);
+        rs = pst.executeQuery();
+        //int i = 0;
+        while (rs.next()) {
+            Date fechaServicio = rs.getDate("fechaServicio");
+            String cedulaCliente = rs.getString("cedulaCliente");
+            String placaVehiculo = rs.getString("placaVehiculo");
+            Time horaLlegada = rs.getTime("horaEntrada");
+            Time horaSalida = rs.getTime("horaSalida");
+            String tiempoDiferencia = rs.getTime("tiempoDiferencia").toString();
+            double subtotal = rs.getDouble("subtotal");
+            int porcentajeDescuento = rs.getInt("porcentajeDescuento");
+            double valorDescuento = rs.getDouble("valorDescuento");
+            double valorTotalServicio = rs.getDouble("valorTotalServicio");
+            tiempoServicio = rs.getTime("tiempoDiferencia").toString();
+            Servicio se = new Servicio(fechaServicio, horaLlegada, cedulaCliente, placaVehiculo, horaSalida, porcentajeDescuento, valorDescuento, subtotal, valorTotalServicio, tiempoDiferencia);
+            listaServicio.add(se);
+        }
+        try {
+            registrarTiempoDiferencia(tiempoServicio, idServicio);
+        } catch (SQLException e) {
+            System.err.println("Error" + e);
+        } finally {
+            try {
+                if (getConnection() != null) {
+                    getConnection().close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error" + e);
+            }
+        }
         return listaServicio;
     }
 
     public static void main(String[] args) throws SQLException {
-
-        DaoServicio d = new DaoServicio();
+        Database db = new Database();
+        /*DaoServicio d = new DaoServicio();
         List<Servicio> lstServicio = d.liquidarServicio(27);
         for (Servicio lstServ : lstServicio) {
             System.out.println(lstServ.getFechaServicio());
@@ -167,9 +201,69 @@ public class DaoServicio extends Database {
             System.out.println(lstServ.getPorcentajeDescuento());
             System.out.println(lstServ.getValorDescuento());
             System.out.println(lstServ.getValorTotalServicio());
-            
-        }
-        
 
+        }*/
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        //String sql = "select count(idServicio) as cantidad, sum(tiempoServicio) as tiempo from servicio";
+        
+        String sql = "SELECT sec_to_time(avg(time_to_sec(tiempoServicio))) tiempo FROM servicio;";
+        
+        pst = db.getConnection().prepareStatement(sql);
+        rs = pst.executeQuery();
+        //int i = 0;
+        while (rs.next()) {
+            
+            Time tiempo = rs.getTime("tiempo");
+            
+            System.out.println(tiempo);
+        }
+
+    }
+
+    private void registrarTiempoDiferencia(String tiempoServicio, int idServicio) throws SQLException {
+
+        try {
+
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+
+            java.util.Date d1 = (java.util.Date) format.parse(tiempoServicio);
+
+            java.sql.Time ppstime = new java.sql.Time(d1.getTime());
+
+            System.out.println(ppstime);
+
+            String sql = "update servicio set tiempoServicio = ? where idServicio = ? ";
+
+            pst = getConnection().prepareStatement(sql);
+            pst.setTime(1, ppstime);
+            pst.setInt(2, idServicio);
+            if (pst.executeUpdate() == 1) {
+                System.out.println("Guarda");
+            }
+            try {
+
+            } catch (Exception e) {
+                System.err.println("Error" + e);
+            } finally {
+                try {
+                    if (getConnection() != null) {
+                        getConnection().close();
+                    }
+                    if (pst != null) {
+                        pst.close();
+                    }
+                    if (rs != null) {
+                        rs.close();
+                    }
+                } catch (SQLException e) {
+                    System.err.println("Error" + e);
+                }
+
+            }
+
+        } catch (ParseException e) {
+
+        }
     }
 }

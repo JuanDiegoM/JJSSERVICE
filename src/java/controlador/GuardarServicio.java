@@ -29,15 +29,15 @@ public class GuardarServicio extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
-            PrintWriter out = response.getWriter();
+            throws ServletException, IOException {
+        PrintWriter pt = response.getWriter();
         try {
-            
+
             String[] ArrayTipoServicios = request.getParameterValues("idTipoServicio[]");
             String[] ArrayValoresServicios = request.getParameterValues("valorServicio[]");
             //System.out.println(Arrays.toString(ArrayValoresServicios));
@@ -45,7 +45,7 @@ public class GuardarServicio extends HttpServlet {
             double valorServicio[];
             valorServicio = new double[ArrayValoresServicios.length];
             idTipoServicio = new int[ArrayTipoServicios.length];
-            
+
             for (int i = 0; i < ArrayTipoServicios.length; i++) {
                 idTipoServicio[i] = Integer.parseInt(ArrayTipoServicios[i]);
                 valorServicio[i] = Double.parseDouble(ArrayValoresServicios[i]);
@@ -60,25 +60,19 @@ public class GuardarServicio extends HttpServlet {
             String horaLlegada = request.getParameter("horaLlegada");
             String fechaServicio = request.getParameter("fechaServicio");
             DaoServicio daoS = new DaoServicio();
-            if(daoS.registrarServicio(cedulaCliente, placaVehiculo, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio, idTipoServicio, valorServicio, idTipoVehiculo)){
+            if (daoS.registrarServicio(cedulaCliente, placaVehiculo, subtotal, porcentajeDescuento, valorDescuento, valorTotalServicio, idTipoServicio, valorServicio, idTipoVehiculo)) {
+
+                pt.println("Servicio Registrado");
                 
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Servicio Registrado');");
-                out.println("location='listarServicios.jsp';");
-                out.println("</script>");
+
+            } else {
                 
-            }else{
-                
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Error al tratar de registrar el servicio');");
-                out.println("location='nuevoServicio.jsp';");
-                out.println("</script>");
+                pt.println("Error al tratar de registrar el servicio");
                 
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(GuardarServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override

@@ -12,19 +12,19 @@
             String tipoUsuario = request.getParameter("tipoUsuarioNew");
             DaoTipoUsuario daoTu = new DaoTipoUsuario();
             if (daoTu.registrarTipoUsuario(tipoUsuario)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Nuevo tipo de usuario guardado');");
                 pt.println("location='tipoUsuario.jsp';");
                 pt.println("</script>");
-                
+
             } else {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Error al tratar de guardar el tipo de usuario');");
                 pt.println("location='nuevoTipoUsuario.jsp';");
                 pt.println("</script>");
-                
+
             }
         } catch (Exception e) {
         }
@@ -43,15 +43,14 @@
         if (passEdit == "" && passRep == "") {
             DaoUsuario du = new DaoUsuario();
             if (du.editarUsuarioSinPassw(idUsuario, nombreUsuario, idTipoUsuarioEdit)) {
-                
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Usuario editado');");
                 pt.println("location='usuarios.jsp';");
                 pt.println("</script>");
 
-            }
-            else{
-                
+            } else {
+
                 pt.println("<script type=\"text/javascript\">");
                 pt.println("alert('Error al tratar de editar el usuario');");
                 pt.println("location='editarUsuario.jsp';");
@@ -64,6 +63,11 @@
                 pt.println("alert('Usuario editado');");
                 pt.println("location='usuarios.jsp';");
                 pt.println("</script>");
+            } else {
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('Error al tratar de editar el usuario');");
+                pt.println("location='editarUsuario.jsp';");
+                pt.println("</script>");
             }
         }
     }
@@ -75,22 +79,25 @@
         try {
             int idTipoUsuario = Integer.parseInt(request.getParameter("btnEliminarTipoUsuario"));
             DaoTipoUsuario daoTu = new DaoTipoUsuario();
-            if (daoTu.eliminarTipoUsuario(idTipoUsuario)) {%>
+            if (daoTu.eliminarTipoUsuario(idTipoUsuario)) {
+                pt.println("<script type=\"text/javascript\">");                
+                pt.println("toastr.success('Tipo de usuario eliminado');");
+                //pt.println("alert('Tipo de usuario eliminado');");
+                pt.println("location='tipoUsuario.jsp';");
+                pt.println("</script>");
 
-<script>
-    aletr("Tipo de usuario Eliminado");
-</script>
-
-<%
-            out.println("<script> alert('Usuario o Contraseña incorrectos'); </script>");
-                response.sendRedirect("tipoUsuario.jsp");
             } else {
-                response.sendRedirect("tipoUsuario.jsp");
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("toastr.success('No se puede eliminar el tipo de usuario por que esta relacionado con un usuario');");
+                //pt.println("alert('No se puede eliminar el tipo de usuario por que esta relacionado con un usuario');");
+                pt.println("location='tipoUsuario.jsp';");
+                pt.println("</script>");
             }
         } catch (Exception e) {
         }
 
-    }%>
+    }
+%>
 
 
 <%
@@ -99,36 +106,45 @@
         int idTipoUsuario = Integer.parseInt(request.getParameter("idTipoUsuario"));
         String tipoUsuario = request.getParameter("tipoUsuarioEdit");
         DaoTipoUsuario daoTu = new DaoTipoUsuario();
-        if(daoTu.editarTipoUsuario(idTipoUsuario, tipoUsuario)){
-            System.out.println("Tipo de usuario editado");
-            response.sendRedirect("tipoUsuario.jsp");
-        }else{
-            System.out.println("No edito el tipo de usuario");
-            response.sendRedirect("editarTipoUsuario.jsp");
+        if (daoTu.editarTipoUsuario(idTipoUsuario, tipoUsuario)) {
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Tipo de usuario editado');");
+            pt.println("location='tipoUsuario.jsp';");
+            pt.println("</script>");
+        } else {
+            pt.println("<script type=\"text/javascript\">");
+            pt.println("alert('Error al tratar de editar el tipo de usuario');");
+            pt.println("location='editarTipoUsuario.jsp';");
+            pt.println("</script>");
         }
     }
 %>
 
 <%
-    if (request.getParameter("guardarNuevoUsuario") != null) {        
+    if (request.getParameter("guardarNuevoUsuario") != null) {
 
-            String nombreUsuario = request.getParameter("nombreUsuarioNew");
-            int idTipoUsuario = Integer.parseInt(request.getParameter("tipoUsuarioNew"));
-            String password = request.getParameter("passNew");
-            try {
-                DaoUsuario du = new DaoUsuario();
-                if (du.registrarUsuario(nombreUsuario, password, idTipoUsuario)) {
-                    
-                    out.println("<script> alert('Hi'); </script>");
-                    RequestDispatcher vista = request.getRequestDispatcher("usuarios.jsp");
-                    vista.forward(request, response);
-                } else {
-                    RequestDispatcher vista = request.getRequestDispatcher("nuevoUsuario.jsp");
-                    vista.forward(request, response);
-                }
-            } catch (IOException | SQLException | ServletException e) {
+        String nombreUsuario = request.getParameter("nombreUsuarioNew");
+        int idTipoUsuario = Integer.parseInt(request.getParameter("tipoUsuarioNew"));
+        String password = request.getParameter("passNew");
+        try {
+            DaoUsuario du = new DaoUsuario();
+            if (du.registrarUsuario(nombreUsuario, password, idTipoUsuario)) {
+
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('Usuario creado');");
+                pt.println("location='usuarios.jsp';");
+                pt.println("</script>");
+            } else {
+                
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('Error al tratar de crear el usuario');");
+                pt.println("location='nuevoUsuario.jsp';");
+                pt.println("</script>");
+                
             }
+        }catch (SQLException e) {
         }
+    }
 %>
 
 <%
@@ -137,14 +153,18 @@
         DaoUsuario du = new DaoUsuario();
         try {
             if (du.eliminarUsuario(idUsuario)) {
-                System.out.println("Eliminado");
-                RequestDispatcher vista = request.getRequestDispatcher("usuarios.jsp");
-                vista.forward(request, response);
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('Usuario eliminado');");
+                pt.println("location='usuarios.jsp';");
+                pt.println("</script>");
+            } else {
+                pt.println("<script type=\"text/javascript\">");
+                pt.println("alert('No se pudo eliminar el usuario');");
+                pt.println("location='usuarios.jsp';");
+                pt.println("</script>");
             }
         } catch (SQLException ex) {
-            
+
         }
     }
 %>
-    </body>
-</html>

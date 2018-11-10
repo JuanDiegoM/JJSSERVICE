@@ -10,6 +10,7 @@ public class Reporte {
     private double costoTotalServicios;
     private float tiempoPromedio;
     private double valorServicio;
+    private String sql;
 
     public Reporte() {
     }
@@ -28,6 +29,18 @@ public class Reporte {
         this.tipoServicio = tipoServicio;
         this.tipoVehiculo = tipoVehiculo;
         this.valorServicio = valorServicio;
+    }
+    
+    public Reporte(String sql){
+        this.sql = sql;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 
     public double getValorServicio() {
