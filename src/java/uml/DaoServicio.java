@@ -207,14 +207,15 @@ public class DaoServicio extends Database {
         ResultSet rs = null;
         //String sql = "select count(idServicio) as cantidad, sum(tiempoServicio) as tiempo from servicio";
         
-        String sql = "SELECT sec_to_time(avg(time_to_sec(tiempoServicio))) tiempo FROM servicio;";
+        String sql = "SELECT sec_to_time(avg(time_to_sec(tiempoServicio))) tiempo FROM servicio";
+        String sqlWhere = " where idServicio = 84";
         
-        pst = db.getConnection().prepareStatement(sql);
+        pst = db.getConnection().prepareStatement(sql+sqlWhere);
         rs = pst.executeQuery();
         //int i = 0;
         while (rs.next()) {
             
-            Time tiempo = rs.getTime("tiempo");
+            String tiempo = rs.getString("tiempo");
             
             System.out.println(tiempo);
         }

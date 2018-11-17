@@ -155,8 +155,6 @@
 
                         </div>
                     </form>
-
-                    <button id="btn" class="btn btn-success">Exportar a Excel</button>
                 </div>
             </div>
         </div>

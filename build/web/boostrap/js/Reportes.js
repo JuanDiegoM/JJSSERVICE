@@ -17,10 +17,10 @@ $(document).ready(function () {
             $("#nombreReporte").css('background', 'red');
             alert("El reporte debe llevar un nombre");
         } else {
-
+            
             $.post('operacionesTipoServicioTipoVehiculo?opcion=guardarReporte', {
-                nombreReporte: $("#nombreReporte").val(),
-                consulta: $("#consulta").val()
+                nombreReporte: $("#nombreReporte").val()
+                
 
             }, function (responseText) {
                 if (responseText != "true") {

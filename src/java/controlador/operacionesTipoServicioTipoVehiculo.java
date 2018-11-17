@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uml.DaoDescuento;
 import uml.DaoReporte;
 import uml.DaoServicio;
@@ -232,11 +233,14 @@ public class operacionesTipoServicioTipoVehiculo extends HttpServlet {
                 Logger.getLogger(operacionesTipoServicioTipoVehiculo.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if ("guardarReporte".equals(request.getParameter("opcion"))) {
+            HttpSession misession = (HttpSession) request.getSession();
+            String consulta =  (String) misession.getAttribute("consulta");
+            String tiemoPromedio = (String) misession.getAttribute("tiemoPromedio");
             DaoReporte daoR = new DaoReporte();
-            String consulta = request.getParameter("consulta");
+            //String consulta = request.getParameter("consulta");
             String nombreReporte = request.getParameter("nombreReporte");
             try {
-                if (daoR.guardarReporte(nombreReporte, consulta)) {
+                if (daoR.guardarReporte(nombreReporte, consulta, tiemoPromedio)) {
                     out.println("true");
                 } else {
                     out.println("false");

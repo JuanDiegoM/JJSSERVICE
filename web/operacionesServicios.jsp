@@ -81,25 +81,3 @@
         }
     }
 %>
-
-<%
-    if (request.getParameter("guardarReporte") != null) {
-
-        DaoReporte daoR = new DaoReporte();
-        String consulta = request.getParameter("consulta");
-        String nombreReporte = request.getParameter("nombreReporte");
-        if (daoR.guardarReporte(nombreReporte, consulta)) {
-            pt.println("<script type=\"text/javascript\">");
-            pt.println("alert('Reporte guardado');");
-            pt.println("location='nuevoReporte.jsp';");
-            pt.println("</script>");
-        }else{
-            pt.println("<script type=\"text/javascript\">");
-            pt.println("alert('Error al tratar de guardar el reporte');");
-            pt.println("location='nuevoReporte.jsp';");
-            pt.println("</script>");
-        }
-
-    }
-%>
-

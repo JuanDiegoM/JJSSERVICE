@@ -10,6 +10,7 @@ public class Reporte {
     private double costoTotalServicios;
     private float tiempoPromedio;
     private double valorServicio;
+    private String tiempoServicio;
     private String sql;
 
     public Reporte() {
@@ -24,11 +25,12 @@ public class Reporte {
         this.tiempoPromedio = tiempoPromedio;
     }
     
-    public Reporte(String fechaServicio, String tipoServicio, String tipoVehiculo, double valorServicio) {
+    public Reporte(String fechaServicio, String tipoServicio, String tipoVehiculo, double valorServicio, String tiempoServicio) {
         this.fechaServicio = fechaServicio;
         this.tipoServicio = tipoServicio;
         this.tipoVehiculo = tipoVehiculo;
         this.valorServicio = valorServicio;
+        this.tiempoServicio = tiempoServicio;
     }
     
     public Reporte(String sql){
@@ -100,6 +102,16 @@ public class Reporte {
     public void setTiempoPromedio(float tiempoPromedio) {
         this.tiempoPromedio = tiempoPromedio;
     }
+
+    public String getTiempoServicio() {
+        return tiempoServicio;
+    }
+
+    public void setTiempoServicio(String tiempoServicio) {
+        this.tiempoServicio = tiempoServicio;
+    }
+    
+    
     
     
     

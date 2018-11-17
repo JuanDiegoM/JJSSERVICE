@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Reporte;
 import uml.DaoReporte;
 
@@ -51,8 +52,14 @@ public class Report extends HttpServlet {
             DaoReporte daoR = new DaoReporte();
             List<Reporte> lstaReporte = daoR.generarReporte(idTipoVehiculo, idTipoServicio, fechaInicio, fechaFin);
             String consulta = daoR.extraerConsulta(idTipoVehiculo, idTipoServicio, fechaInicio, fechaFin);
-            //System.out.println(consulta);
-            out.println("<input type='hidden' id='consulta' name='consulta' value='"+consulta+"'>");
+            HttpSession session = request.getSession();
+            session.setAttribute("consulta", consulta);
+            
+            String tiempoPromedio = daoR.extraerTiempoPromedio(idTipoVehiculo, idTipoServicio, fechaInicio, fechaFin);
+            System.out.println(tiempoPromedio);
+            session.setAttribute("tiemoPromedio", tiempoPromedio);
+            
+            
             out.println("<table class='table table-bordered'>");
             out.println("<thead>");
             out.println("<tr>\n" +
@@ -60,6 +67,7 @@ public class Report extends HttpServlet {
 "                                <th>Tipo Servicio</th>\n" +
 "                                <th>Tipo Veh&iacute;culo</th>\n" +
 "                                <th>Costo Servicio</th>\n" +
+"                                 <th>Tiempo Servicio</th>\n" +
 "                            </tr>");
             out.println("</thead>");
             
@@ -70,7 +78,8 @@ public class Report extends HttpServlet {
 "                                <td>"+lstReporte.getFechaServicio()+"</td>\n" +
 "                                <td>"+lstReporte.getTipoServicio()+"</td>\n" +
 "                                <td>"+lstReporte.getTipoVehiculo()+"</td>\n" +
-"                                <td>"+lstReporte.getValorServicio()+"</td>\n" +
+"                                <td>"+lstReporte.getValorServicio()+"</td>\n" +        
+"                                <td>"+lstReporte.getTiempoServicio()+"</td>\n" +
 "                            </tr>");
                 out.println("</tbody>");
                 costoTotalServicios = costoTotalServicios+lstReporte.getValorServicio();
@@ -78,12 +87,28 @@ public class Report extends HttpServlet {
                 //out.println("<td>Valor total servicios: "+lstReporte.getCostoTotalServicios()+"</td>");
                 //out.println("<td>Cantidad Servicios: "+lstReporte.getCantidadServicios()+"</td>");
             }
-            out.println("<th>Valor Total Servicios</th>");
-            out.println("<th>"+costoTotalServicios+"</th>");
-            out.println("<th>Cantidad De servicios Prestados</th>");
-            out.println("<th>"+i+"</th>");
-            //out.println("<th>Promedio de tiempo</th>");
-            out.println("</table>");
+//            out.println("<th>Valor Total Servicios</th>");
+//            out.println("<th>"+costoTotalServicios+"</th>");
+//            out.println("<th>Cantidad De servicios Prestados</th>");
+//            out.println("<th>"+i+"</th>");
+//            //out.println("<th>Promedio de tiempo</th>");
+//            out.println("</table>");
+
+              out.println("</table><br>");
+                out.println("<table class='table table-bordered'>");
+                out.println("<tr>");
+                out.println("<th>Valor Total Servicios</th>");
+                out.println("<th>" + costoTotalServicios + "</th>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<th>Cantidad De servicios Prestados</th>");
+                out.println("<th>" + i + "</th>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<th>Tiempo Promedio</th>");
+                out.println("<th>" + tiempoPromedio + "</th>");
+                out.println("</tr>");
+                out.println("</table>");
             
             
         } catch (SQLException ex) {

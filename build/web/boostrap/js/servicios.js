@@ -146,11 +146,13 @@ function guardarServicio() {
         contadorErrores++;
     }
     if (contadorErrores !== 0) {
-        alert("Los Campos pintados de rojo son obligatorios");
+        toastr.error("Los Campos pintados de rojo son obligatorios");
+        //alert("Los Campos pintados de rojo son obligatorios");
         return false;
     } else {
         if (cont === 0) {
-            alert("Debe seleccionar al menos un tipo de servicio");
+            toastr.error("Debe seleccionar al menos un tipo de servicio");
+            //alert("Debe seleccionar al menos un tipo de servicio");
             return false;
         } else {
             $("#contador").val(contador);

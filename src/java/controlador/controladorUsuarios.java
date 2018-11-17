@@ -83,7 +83,7 @@ public class controladorUsuarios extends HttpServlet {
             } else {
 
                 out.println("<script type=\"text/javascript\">");
-                out.println("alert('User or password incorrect');");
+                out.println("alert('Usuario o contarseña incorrectos');");
                 out.println("location='login.jsp';");
                 out.println("</script>");
 
